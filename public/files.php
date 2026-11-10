@@ -21,7 +21,7 @@ require_once __DIR__ . '/head.php';
     <div class="card">
         <legend>Мои файлы</legend>
         <?php if (empty($list)): ?>
-            <p class="muted">Пока нет файлов. <a href="upload.php" style="color:#9cc1ff;">Загрузите первый →</a></p>
+            <p class="muted">Пока нет файлов. <a href="upload.php" style="color:#9cc1ff;">Загрузите первый -></a></p>
         <?php else: ?>
             <table>
                 <thead><tr><th>Файл</th><th>Размер</th><th>Дата</th><th></th></tr></thead>

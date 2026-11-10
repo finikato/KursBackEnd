@@ -1,5 +1,4 @@
 <?php
-// Если в URL есть ?css=1 — отдаём CSS и завершаем работу
 if (isset($_GET['css'])) {
     header('Content-Type: text/css; charset=utf-8');
     readfile(__DIR__ . '/style.css');

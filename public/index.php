@@ -8,13 +8,12 @@ $filesList = $u ? listFiles((int)$u['id']) : [];
 
 function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
 
-// Подключаем head.php (там выведется <head> и откроется <body>)
 require_once __DIR__ . '/head.php';
 ?>
 
     <header class="topbar">
         <a href="index.php" class="brand">
-            <img src="logo.png" alt="Logo" class="brand-logo">
+            <img src="uploads/logo.jpg" alt="Logo" class="brand-logo">
             <span>Fin&Co</span>
         </a>
         <nav>

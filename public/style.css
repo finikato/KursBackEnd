@@ -28,7 +28,6 @@ body {
     overflow-x: hidden;
 }
 
-/* ========== HEADER ========== */
 .topbar {
     position: sticky;
     top: 0;
@@ -86,7 +85,6 @@ body {
     box-shadow: 0 0 10px rgba(255,255,255,0.2);
 }
 
-/* ========== LAYOUT ========== */
 .container {
     max-width: 1100px;
     width: 100%;
@@ -94,8 +92,6 @@ body {
     padding: 0 20px;
     flex: 1;
 }
-
-/* ========== HERO ========== */
 .hero {
     text-align: center;
     margin-bottom: 40px;
@@ -111,7 +107,6 @@ body {
     color: transparent;
 }
 
-/* ========== SERVICES (плитки) ========== */
 .services {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -182,7 +177,6 @@ body {
     transform: scale(1.05);
 }
 
-/* ========== FORMS ========== */
 .form-container {
     background: var(--glass-bg);
     border-radius: var(--border-radius);
@@ -244,7 +238,6 @@ input:focus, select:focus, textarea:focus {
 }
 select option { color: #000; background: #fff; }
 
-/* ========== BUTTONS ========== */
 button, .btn {
     display: inline-block;
     background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
@@ -276,7 +269,6 @@ button:active, .btn:active {
 }
 .btn-secondary:hover { background: rgba(255,255,255,0.16); }
 
-/* ========== ALERTS ========== */
 .alert {
     padding: 12px 16px;
     border-radius: 10px;
@@ -287,7 +279,6 @@ button:active, .btn:active {
 .alert-success { background: rgba(46,204,113,0.15); color: #8ef3b5; border: 1px solid rgba(46,204,113,0.45); }
 .alert-info    { background: rgba(37,117,252,0.15); color: #a9c5ff; border: 1px solid rgba(37,117,252,0.45); }
 
-/* ========== TABLES ========== */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -312,7 +303,6 @@ th {
 }
 tr:hover td { background: rgba(255,255,255,0.05); }
 
-/* ========== PRE ========== */
 pre {
     background: rgba(0,0,0,0.45);
     color: #e2e8f0;
@@ -325,7 +315,6 @@ pre {
     border: 1px solid var(--glass-border);
 }
 
-/* ========== SVG DRAWING ========== */
 .svg-wrap {
     background: rgba(255,255,255,0.06);
     border: 1px dashed var(--glass-border);
@@ -337,13 +326,10 @@ pre {
     margin: 0 0 18px;
 }
 
-/* ========== AUTH ========== */
 .auth-wrap { max-width: 500px; margin: 40px auto; }
 
-/* ========== UTIL ========== */
 .muted { color: #a99fc0; font-size: 0.9em; }
 
-/* ========== CARD ========== */
 .card {
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -359,7 +345,6 @@ pre {
     box-shadow: 0 14px 38px rgba(31, 38, 135, 0.5);
 }
 
-/* ========== UPLOAD ========== */
 .upload-dropzone {
     border: 2px dashed rgba(255, 255, 255, 0.3);
     border-radius: 12px;
@@ -386,7 +371,6 @@ pre {
     font-size: 1rem;
 }
 
-/* ========== MOBILE ========== */
 @media (max-width: 640px) {
     .topbar { flex-wrap: wrap; padding: 10px 14px; height: auto; }
     .topbar nav { gap: 2px; }
@@ -397,7 +381,6 @@ pre {
     th, td { padding: 8px 10px; font-size: 0.85rem; }
 }
 
-/* ========== THEMES ========== */
 body.theme-dark {
     background: linear-gradient(60deg, #5c0808, #2b1383, #2f014b) fixed !important;
     color: #f8f9fa !important;

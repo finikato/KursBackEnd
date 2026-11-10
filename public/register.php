@@ -9,6 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Заполните все поля';
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = 'Некорректный email';
+    } elseif (!preg_match('/^[a-zA-Z0-9]+$/', $pass)) {
+        $error = 'Пароль может содержать только английские буквы и цифры';
     } else {
         try {
             $hash = password_hash($pass, PASSWORD_DEFAULT);
@@ -37,7 +39,7 @@ require_once __DIR__ . '/head.php';
     <div class="form-container auth-wrap">
         <legend>Регистрация</legend>
         <?php if ($success): ?>
-            <div class="alert alert-success">Аккаунт создан. <a href="login.php" style="color:#8ef3b5;">Войти →</a></div>
+            <div class="alert alert-success">Аккаунт создан. <a href="login.php" style="color:#8ef3b5;">Войти -></a></div>
         <?php else: ?>
             <?php if ($error): ?><div class="alert alert-error"><?= htmlspecialchars($error) ?></div><?php endif; ?>
             <form method="POST">
@@ -47,7 +49,7 @@ require_once __DIR__ . '/head.php';
                     <label>Email</label>
                     <input name="email" type="email" placeholder="you@mail.ru" required value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">
                     <label>Пароль</label>
-                    <input name="password" type="password" placeholder="Пароль" required>
+                    <input name="password" type="password" placeholder="Только буквы и цифры" required pattern="^[a-zA-Z0-9]+$" title="Пароль должен содержать только английские буквы и цифры">
                 </div>
                 <button type="submit">Создать аккаунт</button>
             </form>
