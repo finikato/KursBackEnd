@@ -433,23 +433,3 @@ body.theme-light input, body.theme-light select {
 }
 body.theme-light .sc-title { color: #1e293b !important; }
 body.theme-light .sc-desc { color: #64748b !important; }
-
-body.theme-colorblind {
-    background: #f0f0f0 !important;
-    color: #000 !important;
-}
-body.theme-colorblind .topbar { background: #004488 !important; }
-body.theme-colorblind .topbar .brand,
-body.theme-colorblind .topbar nav a { color: #fff !important; }
-body.theme-colorblind .form-container,
-body.theme-colorblind .card {
-    background: #fffbe6 !important;
-    border: 2px solid #004488 !important;
-    color: #000 !important;
-}
-body.theme-colorblind label, body.theme-colorblind legend { color: #000 !important; }
-body.theme-colorblind input, body.theme-colorblind select {
-    background: #fff !important;
-    color: #000 !important;
-    border-color: #004488 !important;
-}

@@ -4,7 +4,6 @@ if (isset($_GET['css'])) {
     readfile(__DIR__ . '/style.css');
     exit;
 }
-
 $pageTitle = $pageTitle ?? 'Marketplace';
 $p = contentParams();
 ?>
@@ -14,6 +13,6 @@ $p = contentParams();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-    <link rel="stylesheet" href="head.php?css=1&v=102">
+    <link rel="stylesheet" href="head.php?css=1&v=105">
 </head>
-<body>
+<body class="<?= themeClass($p['theme']) ?>">
