@@ -5,7 +5,7 @@ if (!$u) { header('Location: login.php'); exit; }
 
 $saved = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $theme = in_array($_POST['theme'] ?? '', ['light','dark','colorblind']) ? $_POST['theme'] : 'light';
+    $theme = in_array($_POST['theme'] ?? '', ['light','dark']) ? $_POST['theme'] : 'dark';
     $lang  = in_array($_POST['language'] ?? '', ['ru','en']) ? $_POST['language'] : 'ru';
     $stmt = getDB()->prepare("UPDATE users SET theme = ?, language = ? WHERE id = ?");
     $stmt->bind_param('ssi', $theme, $lang, $u['id']);
@@ -23,13 +23,12 @@ require_once __DIR__ . '/head.php';
 <header class="topbar">
     <a href="index.php" class="brand">
         <img src="uploads/logo.jpg" alt="Logo" class="brand-logo">
-        <span>Marketplace</span>
+        <span>Fin&Co</span>
     </a>
     <nav>
-        <a href="index.php"><?= t('main', $lang) ?></a>
+        <a href="index.php"><?= t('home', $lang) ?></a>
         <a href="settings.php" class="active"><?= t('settings', $lang) ?></a>
-        <a href="upload.php"><?= t('upload', $lang) ?></a>
-        <a href="files.php"><?= t('files', $lang) ?></a>
+        <a href="mail/index.php"><?= t('mail', $lang) ?></a>
         <a href="logout.php" class="logout"><?= t('logout', $lang) ?></a>
     </nav>
 </header>

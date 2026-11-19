@@ -28,7 +28,10 @@ $pageTitle = 'Регистрация';
 require_once __DIR__ . '/head.php';
 ?>
 <header class="topbar">
-    <a href="index.php" class="brand"><span class="brand-badge">M</span><span>Marketplace</span></a>
+    <a href="index.php" class="brand">
+            <img src="logo.jpg" alt="Logo" class="brand-logo" style="width: 32px; height: 32px; border-radius: 50%;">
+            <span>Fin&Co</span>
+        </a>
     <nav>
         <a href="index.php">Главная</a>
         <a href="login.php">Войти</a>

@@ -80,10 +80,13 @@ function logout(): void {
 
 function contentParams(): array {
     $u = currentUser();
-    if ($u) return ['login'=>$u['name'], 'theme'=>$u['theme'], 'language'=>$u['language']];
-    return ['login'=>$_COOKIE['guest_name'] ?? 'Гость',
-            'theme'=>$_COOKIE['theme'] ?? 'dark',
-            'language'=>$_COOKIE['language'] ?? 'ru'];
+    if ($u) return ['login' => $u['name'], 'theme' => $u['theme'], 'language' => $u['language']];
+    
+    return [
+        'login'    => $_COOKIE['guest_name'] ?? 'Гость',
+        'theme'    => $_COOKIE['theme'] ?? 'dark',
+        'language' => $_COOKIE['language'] ?? 'ru'
+    ];
 }
 
 function t(string $k, string $lang): string {

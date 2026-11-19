@@ -21,7 +21,26 @@ class GameMailSystem {
                 ('Алмазы', 'gold', 100)
             ");
         }
-        return $this->db->query("SELECT * FROM reward_templates ORDER BY id ASC")->fetch_all(MYSQLI_ASSOC);
+        
+        $rewards = $this->db->query("SELECT * FROM reward_templates ORDER BY id ASC")->fetch_all(MYSQLI_ASSOC);
+        
+        $lang = contentParams()['language'];
+        if ($lang === 'en') {
+            $translations = [
+                'Сундук с золотом' => 'Chest of Gold',
+                'Мешок золота' => 'Bag of Gold',
+                'Опыт' => 'Experience',
+                'Эпический предмет' => 'Epic Item',
+                'Зелье здоровья' => 'Health Potion',
+                'Алмазы' => 'Diamonds'
+            ];
+            foreach ($rewards as &$r) {
+                if (isset($translations[$r['name']])) {
+                    $r['name'] = $translations[$r['name']];
+                }
+            }
+        }
+        return $rewards;
     }
 
     public function findPlayerByIdOrEmail(string $search): ?array {

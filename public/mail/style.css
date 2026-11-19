@@ -335,3 +335,74 @@ summary:hover { color: #fff; }
     .topbar { flex-wrap: wrap; padding: 10px 14px; height: auto; }
     .player-card { flex-direction: column; align-items: flex-start; gap: 15px; }
 }
+
+body.theme-light details {
+    background: #f1f5f9 !important;
+    border: 1px solid #cbd5e1 !important;
+}
+body.theme-light summary {
+    color: #1e293b !important;
+    font-weight: 600;
+}
+body.theme-light summary:hover {
+    color: #2575fc !important;
+}
+body.theme-light .gen-form input[type="text"], 
+body.theme-light .gen-form input[type="email"], 
+body.theme-light .gen-form select, 
+body.theme-light .gen-form textarea {
+    background: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+}
+body.theme-light .gen-form input[type="text"]:focus, 
+body.theme-light .gen-form input[type="email"]:focus, 
+body.theme-light .gen-form select:focus, 
+body.theme-light .gen-form textarea:focus {
+    border-color: #2575fc !important;
+    box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2) !important;
+}
+body.theme-light .gen-form label {
+    color: #1e293b !important;
+}
+body.theme-light .gen-form label:has(input[type="checkbox"]) {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    color: #1e293b !important;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+body.theme-light .gen-form label:has(input[type="checkbox"]):hover {
+    border-color: #2575fc !important;
+    background: #f8fafc !important;
+}
+body.theme-light .gen-form input[type="checkbox"] {
+    accent-color: #2575fc;
+}
+
+.reward-box.reward-gold {
+    border: 2px solid #ffd700 !important; 
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    background: rgba(255, 215, 0, 0.1) !important;
+}
+
+.reward-box.reward-exp {
+    border: 2px solid #38ef7d !important;
+    box-shadow: 0 0 10px rgba(56, 239, 125, 0.3);
+    background: rgba(56, 239, 125, 0.1) !important;
+}
+
+.reward-box.reward-item {
+    border: 2px solid #8e2de2 !important;
+    box-shadow: 0 0 10px rgba(142, 45, 226, 0.3);
+    background: rgba(142, 45, 226, 0.1) !important;
+}
+.reward-box.reward-potion {
+    border: 2px solid #ff4b2b !important;
+    box-shadow: 0 0 10px rgba(255, 75, 43, 0.3);
+    background: rgba(255, 75, 43, 0.1) !important;
+}
+.reward-box.reward-diamond {
+    border: 2px solid #00d2ff !important;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.3);
+    background: rgba(0, 210, 255, 0.1) !important;
+}

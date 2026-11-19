@@ -32,7 +32,6 @@ if ($action === 'settings') {
         setcookie('theme', $_POST['theme'], time()+2592000, '/', '', false, true);
         header('Location: auth.php?action=settings'); exit;
     }
-    // ... форма настроек ...
     exit;
 }
 

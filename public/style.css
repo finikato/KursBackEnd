@@ -433,3 +433,39 @@ body.theme-light input, body.theme-light select {
 }
 body.theme-light .sc-title { color: #1e293b !important; }
 body.theme-light .sc-desc { color: #64748b !important; }
+
+body.theme-light .player-info h1 {
+    color: #1e293b !important;
+}
+body.theme-light .player-info h1 span {
+    background: linear-gradient(90deg, #2575fc, #6a11cb);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent !important;
+}
+body.theme-light .player-info p {
+    color: #64748b !important;
+}
+body.theme-light .stats {
+    color: #b45309 !important;
+    text-shadow: none !important;
+}
+body.theme-light .btn-secondary {
+    background: #e2e8f0 !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1 !important;
+}
+body.theme-light .btn-secondary:hover {
+    background: #cbd5e1 !important;
+}
+body.theme-light .sc-emoji {
+    color: #1e293b !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.theme-light .service-card:hover .sc-emoji {
+    color: #2575fc !important;
+    background: rgba(37, 117, 252, 0.1) !important;
+    border-color: rgba(37, 117, 252, 0.2) !important;
+}

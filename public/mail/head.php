@@ -1,5 +1,5 @@
 <?php
-
+// Если запросили CSS — отдаем стили почты
 if (isset($_GET['css'])) {
     header('Content-Type: text/css; charset=utf-8');
     readfile(__DIR__ . '/style.css');
@@ -15,7 +15,8 @@ $p = contentParams();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-
-    <link rel="stylesheet" href="head.php?css=1&v=1">
+    
+    <link rel="stylesheet" href="head.php?css=1&v=105">
+    <link rel="stylesheet" href="../head.php?css=1&v=105">
 </head>
-<body></body>
+<body class="<?= themeClass($p['theme']) ?>">
