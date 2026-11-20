@@ -40,7 +40,7 @@ require_once __DIR__ . '/head.php';
     </section>
 
     <section class="card" style="text-align: center; padding: 80px 20px;">
-        <h2 style="font-size: 2.5rem; color: #fff; margin-bottom: 20px;">
+        <h2 class="hero-title">
             <?= $lang === 'en' ? 'Check your in-game mail!' : 'Проверьте свою игровую почту!' ?>
         </h2>
         <p style="color: #cfc8dc; font-size: 1.2rem; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">
