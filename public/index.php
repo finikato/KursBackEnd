@@ -34,7 +34,7 @@ require_once __DIR__ . '/head.php';
 <main class="container">
     <section class="hero" style="margin-bottom: 60px; margin-top: 40px;">
         <h1><?= t('welcome', $lang) ?>, <span class="accent"><?= e($p['login']) ?></span></h1>
-        <p style="color:#cfc8dc;font-size:1.05rem;">
+        <p class="hero-subtitle">
             <?= $lang === 'en' ? 'Welcome to your personal portal' : 'Добро пожаловать в ваш личный портал' ?>
         </p>
     </section>
@@ -43,7 +43,7 @@ require_once __DIR__ . '/head.php';
         <h2 class="hero-title">
             <?= $lang === 'en' ? 'Check your in-game mail!' : 'Проверьте свою игровую почту!' ?>
         </h2>
-        <p style="color: #cfc8dc; font-size: 1.2rem; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto;">
+        <p class="hero-text">
             <?= $lang === 'en' 
                 ? 'You have rewards, experience points and messages waiting for you. Claim your gifts now!' 
                 : 'Вас ждут награды, опыт и сообщения. Заберите свои подарки прямо сейчас!' ?>

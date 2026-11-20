@@ -133,6 +133,20 @@ body {
     color: transparent;
 }
 
+.hero-subtitle {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+}
+
+.hero-text {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    margin-bottom: 40px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .card, .form-container, .player-card {
     background: var(--surface); 
     border: 1px solid var(--border);
@@ -485,6 +499,10 @@ body.theme-light .mail-item.active {
 }
 body.theme-light .hero-title {
     color: #1e293b !important;
+}
+body.theme-light .hero-subtitle,
+body.theme-light .hero-text {
+    color: #64748b;
 }
 body.theme-light input, body.theme-light select, body.theme-light textarea,
 body.theme-light .gen-form input, body.theme-light .gen-form textarea {
