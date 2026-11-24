@@ -56,7 +56,7 @@ function startSession(): void {
 function currentUser(): ?array {
     startSession();
     if (empty($_SESSION['user_id'])) return null;
-    $s = getDB()->prepare("SELECT id, name, email, theme, language, level, gold, exp, avatar FROM users WHERE id=?");
+    $s = getDB()->prepare("SELECT id, name, email, theme, level, gold, exp, avatar FROM users WHERE id=?");
     $s->bind_param('i', $_SESSION['user_id']); $s->execute();
     $row = $s->get_result()->fetch_assoc();
     return $row ?: null;
@@ -80,35 +80,14 @@ function logout(): void {
 
 function contentParams(): array {
     $u = currentUser();
-    if ($u) return ['login' => $u['name'], 'theme' => $u['theme'], 'language' => $u['language']];
-    
-    return [
-        'login'    => $_COOKIE['guest_name'] ?? 'Гость',
-        'theme'    => $_COOKIE['theme'] ?? 'dark',
-        'language' => $_COOKIE['language'] ?? 'ru'
-    ];
-}
+    if ($u && isset($u['theme'])) {
+        return ['login' => $u['name'], 'theme' => $u['theme']];
+    }
 
-function t(string $k, string $lang): string {
-    $d = [
-        'ru' => [
-            'welcome' => 'Добро пожаловать', 'logout' => 'Выйти', 'login' => 'Войти',
-            'settings' => 'Настройки', 'upload' => 'Загрузить', 'files' => 'Файлы',
-            'register' => 'Регистрация', 'save' => 'Сохранить', 'main' => 'На главную',
-            'home' => 'Главная',
-            'theme' => 'Тема', 'language' => 'Язык', 'light' => 'Светлая', 'dark' => 'Тёмная',
-            'profile' => 'Профиль', 'mail' => 'Почта'
-        ],
-        'en' => [
-            'welcome' => 'Welcome', 'logout' => 'Logout', 'login' => 'Login',
-            'settings' => 'Settings', 'upload' => 'Upload', 'files' => 'Files',
-            'register' => 'Register', 'save' => 'Save', 'main' => 'Home',
-            'home' => 'Home',
-            'theme' => 'Theme', 'language' => 'Language', 'light' => 'Light', 'dark' => 'Dark',
-            'profile' => 'Profile', 'mail' => 'Mail'
-        ]
+    return [
+        'login' => $_COOKIE['guest_name'] ?? 'Гость',
+        'theme' => $_COOKIE['theme'] ?? 'dark',
     ];
-    return $d[$lang][$k] ?? $k;
 }
 
 function themeClass(string $t): string {

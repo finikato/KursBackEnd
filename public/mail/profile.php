@@ -5,7 +5,6 @@ $u = currentUser();
 if (!$u) { header('Location: ../login.php'); exit; }
 
 $p = contentParams();
-$lang = $p['language'];
 
 $viewUserId = isset($_GET['id']) ? (int)$_GET['id'] : (int)$u['id'];
 $isOwnProfile = ($viewUserId === (int)$u['id']);
@@ -39,15 +38,15 @@ if ($isOwnProfile && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['ava
                 $stmt->execute();
                 $u = currentUser();
                 $profileUser = $u;
-                $msg = $lang === 'en' ? 'Avatar updated!' : 'Аватар успешно обновлен!';
+                $msg = 'Аватар успешно обновлен!';
             } else {
-                $error = $lang === 'en' ? 'Error saving file.' : 'Ошибка при сохранении файла.';
+                $error = 'Ошибка при сохранении файла.';
             }
         } else {
-            $error = $lang === 'en' ? 'Only JPG, PNG and GIF allowed.' : 'Разрешены только JPG, PNG и GIF.';
+            $error = 'Разрешены только JPG, PNG и GIF.';
         }
     } else {
-        $error = $lang === 'en' ? 'File upload error.' : 'Ошибка загрузки файла.';
+        $error = 'Ошибка загрузки файла.';
     }
 }
 
@@ -56,8 +55,8 @@ $currentExp = $profileUser['exp'] ?? 0;
 $expNeeded = round(100 * pow(1.2, $currentLevel - 1));
 $progressPercent = $expNeeded > 0 ? min(100, ($currentExp / $expNeeded) * 100) : 0;
 
-$pageTitle = $isOwnProfile ? ($lang === 'en' ? 'My Profile' : 'Мой профиль') : ($lang === 'en' ? 'Player Profile' : 'Профиль игрока');
-require_once __DIR__ . '/head.php';
+$pageTitle = $isOwnProfile ? 'Мой профиль' : 'Профиль игрока';
+require_once __DIR__ . '/../head.php';
 ?>
 
 <header class="topbar">
@@ -66,11 +65,11 @@ require_once __DIR__ . '/head.php';
         <span>Fin&Co</span>
     </a>
     <nav>
-        <a href="../index.php"><?= t('home', $lang) ?></a>
-        <a href="../settings.php"><?= t('settings', $lang) ?></a>
-        <a href="profile.php" class="active"><?= t('profile', $lang) ?></a>
-        <a href="index.php"><?= t('mail', $lang) ?></a>
-        <a href="../logout.php" class="logout"><?= t('logout', $lang) ?></a>
+        <a href="../index.php">Главная</a>
+        <a href="../settings.php">Настройки</a>
+        <a href="profile.php" class="active">Профиль</a>
+        <a href="index.php">Почта</a>
+        <a href="../logout.php" class="logout">Выйти</a>
     </nav>
 </header>
 
@@ -92,7 +91,7 @@ require_once __DIR__ . '/head.php';
                 
                 <div style="margin-bottom: 10px;">
                     <p style="color: #ffd700; font-size: 1.1rem; font-weight: 600; margin-bottom: 8px;">
-                        <?= $lang === 'en' ? 'Level' : 'Уровень' ?> <?= $currentLevel ?>
+                        Уровень <?= $currentLevel ?>
                     </p>
                     
                     <div style="width: 300px; height: 12px; background: rgba(0,0,0,0.4); border-radius: 6px; margin: 0 auto; overflow: hidden; border: 1px solid rgba(255,255,255,0.1);">
@@ -111,7 +110,7 @@ require_once __DIR__ . '/head.php';
                     <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
                         <input type="file" name="avatar" id="avatarInput" accept="image/*" style="display: none;" onchange="this.form.submit()">
                         <label for="avatarInput" class="btn" style="padding: 8px 16px; font-size: 0.85rem; cursor: pointer; margin: 0; background: rgba(255,255,255,0.1); box-shadow: none; border: 1px solid rgba(255,255,255,0.2);">
-                            <?= $lang === 'en' ? 'Change avatar' : 'Сменить аватар' ?>
+                            Сменить аватар
                         </label>
                     </div>
                 </form>
@@ -121,10 +120,10 @@ require_once __DIR__ . '/head.php';
             <div style="margin-top: 10px; display: flex; flex-direction: column; gap: 10px;">
                 
                 <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1);">
-                    <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 5px;"><?= $lang === 'en' ? 'Unique ID' : 'Уникальный ID' ?></div>
+                    <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 5px;">Уникальный ID</div>
                     <div style="font-size: 1.2rem; font-weight: 700; color: #fff;">#<?= $profileUser['id'] ?></div>
                     <?php if ($isOwnProfile): ?>
-                        <div style="font-size: 0.8rem; color: #8ef3b5; margin-top: 5px;"><?= $lang === 'en' ? 'You can receive mail by this ID' : 'По этому ID можно отправлять вам письма' ?></div>
+                        <div style="font-size: 0.8rem; color: #8ef3b5; margin-top: 5px;">По этому ID можно отправлять вам письма</div>
                     <?php endif; ?>
                 </div>
 
@@ -134,8 +133,8 @@ require_once __DIR__ . '/head.php';
                 </div>
 
                 <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(255, 215, 0, 0.3);">
-                    <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 5px;"><?= $lang === 'en' ? 'Balance' : 'Баланс' ?></div>
-                    <div style="font-size: 1.4rem; font-weight: 700; color: #ffd700;"><?= $profileUser['gold'] ?? 0 ?> <?= $lang === 'en' ? 'Gold' : 'Золота' ?></div>
+                    <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 5px;">Баланс</div>
+                    <div style="font-size: 1.4rem; font-weight: 700; color: #ffd700;"><?= $profileUser['gold'] ?? 0 ?> Золота</div>
                 </div>
 
             </div>

@@ -6,18 +6,15 @@ if (!$u) { header('Location: login.php'); exit; }
 $saved = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $theme = in_array($_POST['theme'] ?? '', ['light','dark']) ? $_POST['theme'] : 'dark';
-    $lang  = in_array($_POST['language'] ?? '', ['ru','en']) ? $_POST['language'] : 'ru';
-    $stmt = getDB()->prepare("UPDATE users SET theme = ?, language = ? WHERE id = ?");
-    $stmt->bind_param('ssi', $theme, $lang, $u['id']);
+    $stmt = getDB()->prepare("UPDATE users SET theme = ? WHERE id = ?");
+    $stmt->bind_param('si', $theme, $u['id']);
     $stmt->execute();
     setcookie('theme', $theme, time() + 86400 * 30, '/', '', false, true);
-    setcookie('language', $lang, time() + 86400 * 30, '/', '', false, true);
-    $u['theme'] = $theme; $u['language'] = $lang;
+    $u['theme'] = $theme;
     $saved = true;
 }
 
-$lang = $u['language'];
-$pageTitle = t('settings', $lang);
+$pageTitle = 'Настройки';
 require_once __DIR__ . '/head.php';
 ?>
 <header class="topbar">
@@ -26,30 +23,25 @@ require_once __DIR__ . '/head.php';
         <span>Fin&Co</span>
     </a>
     <nav>
-        <a href="index.php"><?= t('home', $lang) ?></a>
-        <a href="settings.php" class="active"><?= t('settings', $lang) ?></a>
-        <a href="mail/index.php"><?= t('mail', $lang) ?></a>
-        <a href="logout.php" class="logout"><?= t('logout', $lang) ?></a>
+        <a href="index.php">Главная</a>
+        <a href="settings.php" class="active">Настройки</a>
+        <a href="mail/index.php">Почта</a>
+        <a href="logout.php" class="logout">Выйти</a>
     </nav>
 </header>
 <main class="container">
     <div class="form-container auth-wrap">
-        <legend><?= t('settings', $lang) ?></legend>
-        <?php if ($saved): ?><div class="alert alert-success"><?= $lang === 'en' ? 'Saved' : 'Сохранено' ?></div><?php endif; ?>
+        <legend>Настройки</legend>
+        <?php if ($saved): ?><div class="alert alert-success">Сохранено</div><?php endif; ?>
         <form method="POST">
             <div class="form-section">
-                <label><?= t('theme', $lang) ?></label>
+                <label>Тема</label>
                 <select name="theme">
-                    <option value="light" <?= $u['theme']==='light'?'selected':'' ?>><?= t('light', $lang) ?></option>
-                    <option value="dark" <?= $u['theme']==='dark'?'selected':'' ?>><?= t('dark', $lang) ?></option>
-                </select>
-                <label><?= t('language', $lang) ?></label>
-                <select name="language">
-                    <option value="ru" <?= $u['language']==='ru'?'selected':'' ?>>Русский</option>
-                    <option value="en" <?= $u['language']==='en'?'selected':'' ?>>English</option>
+                    <option value="light" <?= $u['theme']==='light'?'selected':'' ?>>Светлая</option>
+                    <option value="dark" <?= $u['theme']==='dark'?'selected':'' ?>>Тёмная</option>
                 </select>
             </div>
-            <button type="submit"><?= t('save', $lang) ?></button>
+            <button type="submit">Сохранить</button>
         </form>
     </div>
 </main>

@@ -4,15 +4,16 @@ if (isset($_GET['css'])) {
     readfile(__DIR__ . '/style.css');
     exit;
 }
-$pageTitle = $pageTitle ?? 'Marketplace';
+$pageTitle = $pageTitle ?? 'Игровая почта';
 $p = contentParams();
+$theme = $p['theme'] ?? 'dark';
 ?>
 <!DOCTYPE html>
-<html lang="<?= $p['language'] ?>">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($pageTitle) ?></title>
-    <link rel="stylesheet" href="head.php?css=1&v=105">
+    <link rel="stylesheet" href="<?= (strpos($_SERVER['PHP_SELF'], '/mail/') !== false) ? '../head.php?css=1&v=106' : 'head.php?css=1&v=106' ?>">
 </head>
-<body class="<?= themeClass($p['theme']) ?>">
+<body class="<?= themeClass($theme) ?>">

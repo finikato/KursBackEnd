@@ -474,7 +474,20 @@ body.theme-light {
     background: #f4f6f8; 
     color: #1e293b;
 }
+body.theme-light legend {
+    color: #1e293b; 
+}
 
+body.theme-light h1, 
+body.theme-light h2, 
+body.theme-light h3, 
+body.theme-light h4 {
+    color: #1e293b;
+}
+
+body.theme-light label {
+    color: #475569;
+}
 body.theme-light .topbar { 
     background: #fff; 
     border-bottom: 1px solid #cbd5e1; 

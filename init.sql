@@ -1,3 +1,4 @@
+SET NAMES utf8mb4;
 USE appDB;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -6,7 +7,6 @@ CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     theme ENUM('light','dark') DEFAULT 'dark',
-    language ENUM('ru','en') DEFAULT 'ru',
     level INT DEFAULT 1,
     gold INT DEFAULT 0,
     exp INT DEFAULT 0,

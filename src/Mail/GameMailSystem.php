@@ -8,10 +8,9 @@ class GameMailSystem {
         $this->db = getDB();
     }
 
-     public function getAvailableRewards(): array {
+    public function getAvailableRewards(): array {
         $check = $this->db->query("SELECT COUNT(*) as cnt FROM reward_templates");
         if ($check->fetch_assoc()['cnt'] == 0) {
-            $this->db->query("SET NAMES 'utf8mb4'");
             $this->db->query("INSERT INTO reward_templates (id, name, type, amount) VALUES 
                 (1, 'Сундук с золотом', 'gold', 500),
                 (2, 'Мешок золота', 'gold', 1500),
@@ -22,40 +21,9 @@ class GameMailSystem {
             ");
         }
         
-        $rewards = $this->db->query("SELECT * FROM reward_templates ORDER BY id ASC")->fetch_all(MYSQLI_ASSOC);
-        
-        $lang = contentParams()['language'];
-        
-        $ru_names = [
-            1 => 'Сундук с золотом',
-            2 => 'Мешок золота',
-            3 => 'Опыт',
-            4 => 'Эпический предмет',
-            5 => 'Зелье здоровья',
-            6 => 'Алмазы'
-        ];
-        
-        $en_names = [
-            1 => 'Chest of Gold',
-            2 => 'Bag of Gold',
-            3 => 'Experience',
-            4 => 'Epic Item',
-            5 => 'Health Potion',
-            6 => 'Diamonds'
-        ];
-
-        foreach ($rewards as &$r) {
-            $id = (int)$r['id'];
-            
-            if ($lang === 'en' && isset($en_names[$id])) {
-                $r['name'] = $en_names[$id];
-            } elseif (isset($ru_names[$id])) {
-                $r['name'] = $ru_names[$id];
-            }
-        }
-        
-        return $rewards;
+        return $this->db->query("SELECT * FROM reward_templates ORDER BY id ASC")->fetch_all(MYSQLI_ASSOC);
     }
+
     public function findPlayerByIdOrEmail(string $search): ?array {
         if (is_numeric($search)) {
             $stmt = $this->db->prepare("SELECT id, name, email FROM users WHERE id = ? LIMIT 1");

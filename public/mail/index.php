@@ -6,7 +6,6 @@ $u = currentUser();
 if (!$u) { header('Location: ../login.php'); exit; }
 
 $p = contentParams();
-$lang = $p['language'];
 
 $mailSystem = new GameMailSystem();
 $claimMessage = '';
@@ -23,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['claim_reward'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_mail'])) {
     $rewardIds = $_POST['reward_ids'] ?? [];
     if (empty($rewardIds)) {
-        $claimMessage = "<div class='alert alert-error'>" . ($lang === 'en' ? 'Select at least one reward' : 'Выберите хотя бы одну награду') . "</div>";
+        $claimMessage = "<div class='alert alert-error'>Выберите хотя бы одну награду</div>";
     } else {
         $mailSystem->sendSystemMail((int)$u['id'], $_POST['subject'], $_POST['body'], array_map('intval', $rewardIds));
         header('Location: index.php'); exit;
@@ -33,16 +32,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_mail'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['send_player_mail'])) {
     $search = trim($_POST['target_search'] ?? '');
     if (empty($search)) {
-        $claimMessage = "<div class='alert alert-error'>" . ($lang === 'en' ? 'Enter Email or ID' : 'Введите Email или ID игрока') . "</div>";
+        $claimMessage = "<div class='alert alert-error'>Введите Email или ID игрока</div>";
     } else {
         $target = $mailSystem->findPlayerByIdOrEmail($search);
         if (!$target) {
-            $claimMessage = "<div class='alert alert-error'>" . ($lang === 'en' ? 'Player not found' : 'Игрок не найден') . "</div>";
+            $claimMessage = "<div class='alert alert-error'>Игрок не найден</div>";
         } elseif ($target['id'] == $u['id']) {
-            $claimMessage = "<div class='alert alert-error'>" . ($lang === 'en' ? 'You cannot send a message to yourself' : 'Нельзя отправить письмо самому себе') . "</div>";
+            $claimMessage = "<div class='alert alert-error'>Нельзя отправить письмо самому себе</div>";
         } else {
             $mailSystem->sendPlayerMail((int)$u['id'], (int)$target['id'], $_POST['subject'], $_POST['body']);
-            $claimMessage = "<div class='alert alert-success'>" . ($lang === 'en' ? 'Message sent to' : 'Письмо отправлено игроку') . " <b>{$target['name']}</b></div>";
+            $claimMessage = "<div class='alert alert-success'>Письмо отправлено игроку <b>{$target['name']}</b></div>";
         }
     }
 }
@@ -54,8 +53,8 @@ foreach ($inbox as $msg) {
     if ($msg['id'] == $currentMailId) { $currentMail = $msg; break; }
 }
 
-$pageTitle = t('mail', $lang);
-require_once __DIR__ . '/head.php';
+$pageTitle = 'Почта';
+require_once __DIR__ . '/../head.php';
 ?>
 
 <header class="topbar">
@@ -64,11 +63,11 @@ require_once __DIR__ . '/head.php';
         <span>Fin&Co</span>
     </a>
     <nav>
-        <a href="../index.php"><?= t('home', $lang) ?></a>
-        <a href="../settings.php"><?= t('settings', $lang) ?></a>
-        <a href="profile.php"><?= t('profile', $lang) ?></a>
-        <a href="index.php" class="active"><?= t('mail', $lang) ?></a>
-        <a href="../logout.php" class="logout"><?= t('logout', $lang) ?></a>
+        <a href="../index.php">Главная</a>
+        <a href="../settings.php">Настройки</a>
+        <a href="profile.php">Профиль</a>
+        <a href="index.php" class="active">Почта</a>
+        <a href="../logout.php" class="logout">Выйти</a>
     </nav>
 </header>
 
@@ -76,11 +75,11 @@ require_once __DIR__ . '/head.php';
     
     <div class="player-card">
         <div class="player-info">
-            <h1><?= $lang === 'en' ? 'Hello' : 'Привет' ?>, <span><?= htmlspecialchars($u['name']) ?></span></h1>
-            <p><?= $lang === 'en' ? 'Level' : 'Уровень' ?> <?= $u['level'] ?? 1 ?> · <?= $lang === 'en' ? 'Player' : 'Игрок' ?></p>
+            <h1>Привет, <span><?= htmlspecialchars($u['name']) ?></span></h1>
+            <p>Уровень <?= $u['level'] ?? 1 ?> · Игрок</p>
         </div>
         <div class="stats">
-            <?= $u['gold'] ?? 0 ?> <?= $lang === 'en' ? 'Gold' : 'Золота' ?>
+            <?= $u['gold'] ?? 0 ?> Золота
         </div>
     </div>
 
@@ -90,13 +89,13 @@ require_once __DIR__ . '/head.php';
         
         <div class="mail-list">
             <?php if (empty($inbox)): ?>
-                <div class="empty-box" style="padding: 30px;"><?= $lang === 'en' ? 'No messages' : 'Нет писем' ?></div>
+                <div class="empty-box" style="padding: 30px;">Нет писем</div>
             <?php else: ?>
                 <?php foreach ($inbox as $msg): ?>
                     <a href="?id=<?= $msg['id'] ?>" class="mail-item <?= ($msg['id'] == $currentMailId) ? 'active' : '' ?> <?= $msg['rewards_list'] ? 'unread' : '' ?>">
                         <div class="mail-item-title"><?= htmlspecialchars($msg['subject']) ?></div>
                         <div class="mail-item-sender">
-                            <?= $msg['sender_id'] ? htmlspecialchars($msg['sender_name']) : ($lang === 'en' ? 'System' : 'Система') ?>
+                            <?= $msg['sender_id'] ? htmlspecialchars($msg['sender_name']) : 'Система' ?>
                         </div>
                     </a>
                 <?php endforeach; ?>
@@ -127,7 +126,7 @@ require_once __DIR__ . '/head.php';
                                 </div>
                             </div>
                         <?php else: ?>
-                            <div><?= $lang === 'en' ? 'From: System' : 'От: Система' ?></div>
+                            <div>От: Система</div>
                         <?php endif; ?>
                         
                         <div style="margin-top: 10px; font-size: 0.8rem; color: #cfc8dc; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
@@ -142,7 +141,7 @@ require_once __DIR__ . '/head.php';
 
                 <?php if ($currentMail['rewards_list']): ?>
                     <div style="margin-top: 30px;">
-                        <h4 style="color: #cfc8dc; margin-bottom: 10px; font-weight: 500;"><?= $lang === 'en' ? 'Attachments:' : 'Вложения:' ?></h4>
+                        <h4 style="color: #cfc8dc; margin-bottom: 10px; font-weight: 500;">Вложения:</h4>
                         <div class="mail-rewards">
                             <?php 
                             $stmtR = getDB()->prepare("SELECT r.name, r.amount, r.type FROM reward_templates r JOIN mail_attachments a ON r.id = a.reward_id WHERE a.message_id = ?");
@@ -180,22 +179,22 @@ require_once __DIR__ . '/head.php';
                                 <form method="POST" style="margin:0;">
                                     <input type="hidden" name="message_id" value="<?= $currentMail['id'] ?>">
                                     <button type="submit" name="claim_reward" class="btn-receive">
-                                        <?= $lang === 'en' ? 'Claim' : 'Получить' ?>
+                                        Получить
                                     </button>
                                 </form>
                             <?php else: ?>
-                                <span class="status-claimed"><?= $lang === 'en' ? 'Already claimed' : 'Награда уже получена' ?></span>
+                                <span class="status-claimed">Награда уже получена</span>
                             <?php endif; ?>
                         <?php else: ?>
                             <span class="status-claimed" style="color: #cfc8dc; border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05);">
-                                <?= $lang === 'en' ? 'Message read' : 'Сообщение прочитано' ?>
+                                Сообщение прочитано
                             </span>
                         <?php endif; ?>
                     </div>
                 </div>
             <?php else: ?>
                 <div class="empty-mail">
-                    <p><?= $lang === 'en' ? 'Select a message on the left' : 'Выберите письмо слева' ?></p>
+                    <p>Выберите письмо слева</p>
                 </div>
             <?php endif; ?>
         </div>
@@ -203,22 +202,22 @@ require_once __DIR__ . '/head.php';
     </div>
 
     <details style="margin-top: 30px;">
-        <summary><?= $lang === 'en' ? 'Reward Generator (System)' : 'Генератор наград (Система)' ?></summary>
+        <summary>Генератор наград (Система)</summary>
         <div class="mailbox" style="margin-top: 15px; padding: 20px;">
             <form method="POST" class="gen-form">
                 <div style="display: flex; flex-direction: column; gap: 15px;">
                     <div>
-                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;"><?= $lang === 'en' ? 'Subject:' : 'Тема письма:' ?></label>
+                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;">Тема письма:</label>
                         <select name="subject" required>
-                            <option value="<?= $lang === 'en' ? 'Login Reward!' : 'Награда за вход!' ?>"><?= $lang === 'en' ? 'Login Reward!' : 'Награда за вход!' ?></option>
-                            <option value="<?= $lang === 'en' ? 'Compensation for maintenance' : 'Компенсация за техработы' ?>"><?= $lang === 'en' ? 'Compensation for maintenance' : 'Компенсация за техработы' ?></option>
-                            <option value="<?= $lang === 'en' ? 'Promo code activated' : 'Промокод активирован' ?>"><?= $lang === 'en' ? 'Promo code activated' : 'Промокод активирован' ?></option>
-                            <option value="<?= $lang === 'en' ? 'Gift from developers' : 'Подарок от разработчиков' ?>"><?= $lang === 'en' ? 'Gift from developers' : 'Подарок от разработчиков' ?></option>
+                            <option value="Награда за вход!">Награда за вход!</option>
+                            <option value="Компенсация за техработы">Компенсация за техработы</option>
+                            <option value="Промокод активирован">Промокод активирован</option>
+                            <option value="Подарок от разработчиков">Подарок от разработчиков</option>
                         </select>
                     </div>
 
                     <div>
-                        <label style="display:block; margin-bottom:10px; color:#cfc8dc;"><?= $lang === 'en' ? 'Select rewards:' : 'Выберите награды:' ?></label>
+                        <label style="display:block; margin-bottom:10px; color:#cfc8dc;">Выберите награды:</label>
                         <div style="display: flex; flex-wrap: wrap; gap: 10px;">
                             <?php foreach ($rewards as $r): ?>
                                 <label style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.3); padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; color: #fff;">
@@ -230,36 +229,36 @@ require_once __DIR__ . '/head.php';
                     </div>
 
                     <div>
-                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;"><?= $lang === 'en' ? 'Message text:' : 'Текст письма:' ?></label>
-                        <textarea name="body" rows="3"><?= $lang === 'en' ? 'Traveler! Here is the reward you deserve.' : 'Путешественник! Вот награда, которую вы заслужили.' ?></textarea>
+                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;">Текст письма:</label>
+                        <textarea name="body" rows="3">Путешественник! Вот награда, которую вы заслужили.</textarea>
                     </div>
                 </div>
-                <button type="submit" name="send_mail" class="btn-submit"><?= $lang === 'en' ? 'Send Reward' : 'Отправить награду' ?></button>
+                <button type="submit" name="send_mail" class="btn-submit">Отправить награду</button>
             </form>
         </div>
     </details>
 
     <details style="margin-top: 15px;">
-        <summary><?= $lang === 'en' ? 'Write to player (Player)' : 'Написать игроку (Игрок)' ?></summary>
+        <summary>Написать игроку (Игрок)</summary>
         <div class="mailbox" style="margin-top: 15px; padding: 20px;">
             <form method="POST" class="gen-form">
                 <div style="display: flex; flex-direction: column; gap: 15px;">
                     <div>
-                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;"><?= $lang === 'en' ? 'To (Email or ID):' : 'Кому (Email или ID игрока):' ?></label>
-                        <input type="text" name="target_search" placeholder="example@mail.ru <?= $lang === 'en' ? 'or' : 'или' ?> 123" required>
+                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;">Кому (Email или ID игрока):</label>
+                        <input type="text" name="target_search" placeholder="example@mail.ru или 123" required>
                     </div>
 
                     <div>
-                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;"><?= $lang === 'en' ? 'Subject:' : 'Тема:' ?></label>
-                        <input type="text" name="subject" placeholder="<?= $lang === 'en' ? 'Hello!' : 'Привет!' ?>" required>
+                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;">Тема:</label>
+                        <input type="text" name="subject" placeholder="Привет!" required>
                     </div>
 
                     <div>
-                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;"><?= $lang === 'en' ? 'Message text:' : 'Текст письма:' ?></label>
-                        <textarea name="body" rows="3" placeholder="<?= $lang === 'en' ? 'Message text...' : 'Текст сообщения...' ?>"></textarea>
+                        <label style="display:block; margin-bottom:5px; color:#cfc8dc;">Текст письма:</label>
+                        <textarea name="body" rows="3" placeholder="Текст сообщения..."></textarea>
                     </div>
                 </div>
-                <button type="submit" name="send_player_mail" class="btn-submit"><?= $lang === 'en' ? 'Send to player' : 'Отправить игроку' ?></button>
+                <button type="submit" name="send_player_mail" class="btn-submit">Отправить игроку</button>
             </form>
         </div>
     </details>
