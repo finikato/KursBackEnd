@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(100) NOT NULL,
     email VARCHAR(150) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    theme ENUM('light','dark') DEFAULT 'dark',
     level INT DEFAULT 1,
     gold INT DEFAULT 0,
     exp INT DEFAULT 0,
@@ -62,11 +61,18 @@ CREATE TABLE IF NOT EXISTS mail_attachments (
     FOREIGN KEY (message_id) REFERENCES mail_messages(id) ON DELETE CASCADE,
     FOREIGN KEY (reward_id) REFERENCES reward_templates(id) ON DELETE CASCADE
 );
-
+CREATE TABLE IF NOT EXISTS user_inventory (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    item_name VARCHAR(100) NOT NULL,
+    quantity INT DEFAULT 1,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    UNIQUE KEY unique_user_item (user_id, item_name)
+);
 INSERT IGNORE INTO reward_templates (id, name, type, amount) VALUES 
 (1, 'Сундук с золотом', 'gold', 500),
 (2, 'Мешок золота', 'gold', 1500),
 (3, 'Опыт', 'exp', 100),
 (4, 'Эпический предмет', 'item', 1),
-(5, 'Зелье здоровья', 'item', 5),
-(6, 'Алмазы', 'gold', 100);
+(5, 'Зелье здоровья', 'item', 5);

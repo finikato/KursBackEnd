@@ -1,50 +1,36 @@
 <?php
-require_once __DIR__ . '/../src/core.php';
+require_once __DIR__ . '/../src/Core/Database.php';
+require_once __DIR__ . '/../src/Core/Session.php';
+require_once __DIR__ . '/../src/Models/User.php';
+require_once __DIR__ . '/../src/Models/GameMailSystem.php';
+require_once __DIR__ . '/../src/Controllers/AuthController.php';
+require_once __DIR__ . '/../src/Controllers/MailController.php';
+require_once __DIR__ . '/../src/Controllers/ProfileController.php';
 
-$u = currentUser();
-$p = contentParams();
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
 
-function e(string $s): string { return htmlspecialchars($s, ENT_QUOTES, 'UTF-8'); }
+use Core\Session;
+Session::start();
 
-$pageTitle = 'Главная';
-require_once __DIR__ . '/head.php';
-?>
+$url = $_GET['url'] ?? 'mail';
+$url = rtrim($url, '/');
+$parts = explode('/', $url);
 
-<header class="topbar">
-    <a href="index.php" class="brand">
-        <img src="uploads/logo.jpg" alt="Logo" class="brand-logo">
-        <span>Fin&Co</span>
-    </a>
-    <nav>
-        <?php if ($u): ?>
-            <a href="index.php" class="active">Главная</a>
-            <a href="settings.php">Настройки</a>
-            <a href="mail/profile.php">Профиль</a>
-            <a href="mail/index.php">Почта</a>
-            <a href="logout.php" class="logout">Выйти</a>
-        <?php else: ?>
-            <a href="index.php" class="active">Главная</a>
-            <a href="login.php">Войти</a>
-            <a href="register.php">Регистрация</a>
-        <?php endif; ?>
-    </nav>
-</header>
+$controllerName = ucfirst($parts[0] ?? 'mail') . 'Controller';
+$methodName = $parts[1] ?? 'index';
+$params = array_slice($parts, 2);
 
-<main class="container">
-    <section class="hero" style="margin-bottom: 60px; margin-top: 40px;">
-        <h1>Добро пожаловать, <span class="accent"><?= e($p['login']) ?></span></h1>
-        <p class="hero-subtitle">Добро пожаловать в ваш личный портал</p>
-    </section>
-
-    <section class="card" style="text-align: center; padding: 80px 20px;">
-        <h2 class="hero-title">Проверьте свою игровую почту!</h2>
-        <p class="hero-text">
-            Вас ждут награды, опыт и сообщения. Заберите свои подарки прямо сейчас!
-        </p>
-        <a href="mail/index.php" class="btn" style="font-size: 1.3rem; padding: 20px 60px; border-radius: 40px;">
-            Перейти в почту ->
-        </a>
-    </section>
-</main>
-</body>
-</html>
+if (class_exists($controllerName)) {
+    $controller = new $controllerName();
+    if (method_exists($controller, $methodName)) {
+        call_user_func_array([$controller, $methodName], $params);
+    } else {
+        http_response_code(404);
+        echo "404 - Метод не найден";
+    }
+} else {
+    http_response_code(404);
+    echo "404 - Страница не найдена";
+}

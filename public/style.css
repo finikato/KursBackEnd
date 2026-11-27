@@ -389,12 +389,6 @@ button:hover, .btn:hover, .btn-submit:hover, .btn-receive:hover {
     border-color: #ff4b2b !important; 
     background: rgba(255,75,43,0.1) !important; 
 }
-
-.reward-box.reward-diamond { 
-    border-color: #00d2ff !important; 
-    background: rgba(0,210,255,0.1) !important; 
-}
-
 .mail-actions { 
     display: flex; 
     justify-content: flex-end; 
@@ -468,79 +462,6 @@ summary:hover {
     color: #8ef3b5; 
     border: 1px solid rgba(46,204,113,0.45); 
 }
-
-/* Светлая тема */
-body.theme-light {
-    background: #f4f6f8; 
-    color: #1e293b;
-}
-body.theme-light legend {
-    color: #1e293b; 
-}
-
-body.theme-light h1, 
-body.theme-light h2, 
-body.theme-light h3, 
-body.theme-light h4 {
-    color: #1e293b;
-}
-
-body.theme-light label {
-    color: #475569;
-}
-body.theme-light .topbar { 
-    background: #fff; 
-    border-bottom: 1px solid #cbd5e1; 
-}
-
-body.theme-light .topbar nav a, body.theme-light .brand { 
-    color: #1e293b; 
-}
-
-body.theme-light .card, body.theme-light .form-container, body.theme-light .player-card,
-body.theme-light details, body.theme-light .mail-list, body.theme-light .mail-content {
-    background: #fff; 
-    border-color: #cbd5e1;
-}
-
-body.theme-light .player-info h1, body.theme-light .mail-content-title, body.theme-light .mail-item-title { 
-    color: #1e293b; 
-}
-
-body.theme-light .mail-item.active { 
-    background: #e2e8f0; 
-}
-body.theme-light .hero-title {
-    color: #1e293b !important;
-}
-body.theme-light .hero-subtitle,
-body.theme-light .hero-text {
-    color: #64748b;
-}
-body.theme-light input, body.theme-light select, body.theme-light textarea,
-body.theme-light .gen-form input, body.theme-light .gen-form textarea {
-    background: #f8fafc !important; 
-    color: #1e293b !important; 
-    border-color: #cbd5e1 !important;
-}
-
-body.theme-light .gen-form label { 
-    color: #1e293b !important; 
-}
-
-body.theme-light .gen-form label:has(input[type="checkbox"]) { 
-    background: #f8fafc !important; 
-    border: 1px solid #cbd5e1 !important; 
-}
-
-body.theme-light summary { 
-    color: #1e293b; 
-}
-
-body.theme-light summary:hover { 
-    color: var(--secondary); 
-}
-
 /* Адаптация под телефоны */
 @media (max-width: 768px) {
     .mail-layout { 
