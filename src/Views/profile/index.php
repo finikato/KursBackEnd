@@ -8,7 +8,7 @@ ob_start();
         <div class="mail-content-header" style="text-align: center; border: none; padding-bottom: 10px; margin-bottom: 10px;">
             
             <div style="position: relative; width: 120px; height: 120px; margin: 0 auto 15px;">
-                <?php if (!empty($profileUser['avatar']) && file_exists(__DIR__ . '/../../../public/' . $profileUser['avatar'])): ?>
+                <?php if (!empty($profileUser['avatar']) && file_exists('/var/www/html/' . $profileUser['avatar'])): ?>
                     <img src="/<?= htmlspecialchars($profileUser['avatar']) ?>" alt="Avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #ffd700; box-shadow: 0 0 15px rgba(255,215,0,0.4);">
                 <?php else: ?>
                     <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #6a11cb, #2575fc); border-radius: 50%; border: 3px solid rgba(255,255,255,0.2);"></div>
@@ -32,8 +32,13 @@ ob_start();
 
             <?php if ($isOwnProfile): ?>
             <form method="POST" action="/profile" enctype="multipart/form-data" style="margin-bottom: 10px;">
-                <?php if ($msg): ?><div class="alert alert-success" style="padding: 8px 12px; font-size: 0.9rem;"><?= $msg ?></div><?php endif; ?>
-                <?php if ($error): ?><div class="alert alert-error" style="padding: 8px 12px; font-size: 0.9rem;"><?= $error ?></div><?php endif; ?>
+                <?php if (!empty($msg)): ?>
+                    <div class="alert alert-success" style="padding: 8px 12px; font-size: 0.9rem;"><?= $msg ?></div>
+                <?php endif; ?>
+                
+                <?php if (!empty($error)): ?>
+                    <div class="alert alert-error" style="padding: 8px 12px; font-size: 0.9rem;"><?= $error ?></div>
+                <?php endif; ?>
                 
                 <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
                     <input type="file" name="avatar" id="avatarInput" accept="image/*" style="display: none;" onchange="this.form.submit()">
@@ -64,21 +69,23 @@ ob_start();
                 <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 5px;">Баланс</div>
                 <div style="font-size: 1.4rem; font-weight: 700; color: #ffd700;"><?= $profileUser['gold'] ?? 0 ?> Золота</div>
             </div>
-                <?php if ($isOwnProfile && !empty($inventory)): ?>
-                <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px;">
-                    <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 10px;">Инвентарь</div>
-                    <div style="display: flex; flex-direction: column; gap: 8px;">
-                        <?php foreach ($inventory as $item): ?>
-                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px;">
-                                <span style="font-weight: 500; color: #fff;"><?= htmlspecialchars($item['item_name']) ?></span>
-                                <span style="background: #2575fc; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; color: #fff;">
-                                    x<?= $item['quantity'] ?>
-                                </span>
-                            </div>
-                        <?php endforeach; ?>
-                    </div>
+
+            <?php if ($isOwnProfile && !empty($inventory)): ?>
+            <div style="background: rgba(0,0,0,0.3); padding: 15px 20px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); margin-top: 10px;">
+                <div style="color: #cfc8dc; font-size: 0.85rem; margin-bottom: 10px;">Инвентарь</div>
+                <div style="display: flex; flex-direction: column; gap: 8px;">
+                    <?php foreach ($inventory as $item): ?>
+                        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 8px 12px; border-radius: 6px;">
+                            <span style="font-weight: 500; color: #fff;"><?= htmlspecialchars($item['item_name']) ?></span>
+                            <span style="background: #2575fc; padding: 2px 8px; border-radius: 12px; font-size: 0.8rem; font-weight: 700; color: #fff;">
+                                x<?= $item['quantity'] ?>
+                            </span>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
+            </div>
             <?php endif; ?>
+
         </div>
     </div>
 </div>

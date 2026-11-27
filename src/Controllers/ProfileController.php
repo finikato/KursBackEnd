@@ -66,10 +66,10 @@ class ProfileController {
                         $error = 'Недопустимое расширение файла.';
                     } else {
                         $newName = 'avatar_' . $u['id'] . '_' . time() . '.' . $ext;
-                        $uploadDir = __DIR__ . '/../../public/uploads/';
+                        $uploadDir = '/var/www/html/uploads/';
                         
                         if (!is_dir($uploadDir)) {
-                            mkdir($uploadDir, 0777, true);
+                            @mkdir($uploadDir, 0777, true);
                         }
 
                         if (move_uploaded_file($file['tmp_name'], $uploadDir . $newName)) {

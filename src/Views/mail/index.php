@@ -39,7 +39,7 @@ ob_start();
                 <div class="mail-content-meta">
                     <?php if ($currentMail['sender_id']): ?>
                         <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 10px;">
-                            <?php if (!empty($currentMail['sender_avatar']) && file_exists(__DIR__ . '/../../../public/' . $currentMail['sender_avatar'])): ?>
+                            <?php if (!empty($currentMail['sender_avatar']) && file_exists('/var/www/html/' . $currentMail['sender_avatar'])): ?>
                                 <img src="/<?= htmlspecialchars($currentMail['sender_avatar']) ?>" alt="Avatar" style="width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #2575fc; flex-shrink: 0;">
                             <?php else: ?>
                                 <div style="width: 72px; height: 72px; background: #2575fc; border-radius: 50%; flex-shrink: 0;"></div>
@@ -83,8 +83,6 @@ ob_start();
                                 $typeClass = 'reward-exp';
                             } elseif (strpos($nameLower, 'зелье') !== false) {
                                 $typeClass = 'reward-potion';
-                            } elseif (strpos($nameLower, 'алмаз') !== false) {
-                                $typeClass = 'reward-diamond';
                             }
                         ?>
                             <div class="reward-box <?= $typeClass ?>">
@@ -96,7 +94,7 @@ ob_start();
                 </div>
             <?php endif; ?>
 
-            <div class="mail-actions">
+            <div class="mail-actions" style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <?php if (!empty($currentRewards)): ?>
                         <?php if (!$currentMail['is_claimed']): ?>
@@ -115,6 +113,15 @@ ob_start();
                         </span>
                     <?php endif; ?>
                 </div>
+
+                <?php if ($currentMail['sender_id']): ?>
+                    <form method="POST" action="/mail" style="margin:0;" onsubmit="return confirm('Вы уверены, что хотите удалить это письмо?');">
+                        <input type="hidden" name="message_id" value="<?= $currentMail['id'] ?>">
+                        <button type="submit" name="delete_mail" style="background: rgba(255, 75, 43, 0.2); color: #ffb4a1; border: 1px solid rgba(255, 75, 43, 0.4); padding: 10px 20px; border-radius: 25px; cursor: pointer; transition: 0.3s; font-weight: 600;">
+                            Удалить
+                        </button>
+                    </form>
+                <?php endif; ?>
             </div>
         <?php else: ?>
             <div class="empty-mail">
@@ -157,7 +164,7 @@ ob_start();
                     <textarea name="body" rows="3">Путешественник! Вот награда, которую вы заслужили.</textarea>
                 </div>
             </div>
-            <button type="submit" name="send_mail" class="btn-submit">Отправить награду</button>
+            <button type="submit" name="send_mail" class="btn-submit" style="margin-top: 15px;">Отправить награду</button>
         </form>
     </div>
 </details>
@@ -182,7 +189,7 @@ ob_start();
                     <textarea name="body" rows="3" placeholder="Текст сообщения..."></textarea>
                 </div>
             </div>
-            <button type="submit" name="send_player_mail" class="btn-submit">Отправить игроку</button>
+            <button type="submit" name="send_player_mail" class="btn-submit" style="margin-top: 15px;">Отправить игроку</button>
         </form>
     </div>
 </details>
